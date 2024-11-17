@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="lee.css">
+    <script type="text/javascript" src="lee.js"></script>
+    <style>
+     .hacker__container {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.hacker__item {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 10px;
+  padding: 20px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.hacker__title {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.hacker__author {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+.hacker__news {
+  margin: 0 atuo;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+</head>
+<body>
+  <div class="hacker" id="feature">
+    <h1 class="hacker__news">文章展示</h1>
+    <div class="hacker__container" id="news">
+        <!-- 文章项目将插入这里 -->
+    </div>
+  </div>
+  
+  <script>
+  async function getLatestPost() {
+  try {
+    const response = await fetch("https://hacker-news.firebaseio.com/v0/newstories.json");
+    const ids = await response.json();
+    return ids.slice(0, 4);  // Fetch the first 4 articles
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function getPostData(id) {
+  try {
+    const url = `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
+    const response = await fetch(url);
+    const postData = await response.json();
+    return postData;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function addItem(targetSelector, news) {
+  const target = document.querySelector(targetSelector);  // 使用 querySelector 选择容器
+  if (!target) {
+    console.error('目标元素未找到');
+    return;
+  }
+
+  // 创建文章项
+  const item = document.createElement('div');
+  item.className = 'hacker__item';  // 设置文章项的类名
+
+  // 创建标题
+  const name = document.createElement('div');
+  name.className = 'hacker__title';  // 设置标题的类名
+  name.innerText = news.title || '无标题';  // 设置标题文本
+
+  // 创建描述或链接
+  const author = document.createElement('div');
+  author.className = 'hacker__author';  // 设置描述的类名
+  if (news.url) {
+    const link = document.createElement('a');
+    link.href = '#';  // 设置为无效链接
+    link.innerText = '';  // 设置链接文本
+    author.appendChild(link);
+  } else {
+    author.innerText = '';
+  }
+
+  // 组装内容
+  item.appendChild(name);  // 添加标题
+  item.appendChild(author);  // 添加描述或链接
+  target.appendChild(item);  // 将文章项插入到目标容器中
+}
+
+
+async function init() {
+  // 假设 getLatestPost() 和 getPostData() 分别获取最新文章的 ID 和详细信息
+  const ids = await getLatestPost();  // 获取文章ID
+  for (let id of ids) {
+    const postData = await getPostData(id);  // 获取每篇文章的详细信息
+    addItem('.hacker__container', postData);  // 插入到 class 为 hacker__container 的元素中
+  }
+}
+init();
+
+
+</script>
+</body>
+</html>

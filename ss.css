@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #fff;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 30px;
+  }
+}
+.header--menu-open {
+  border-bottom: none;
+}
+.header__menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+@media screen and (max-width: 991px) {
+  .header__menu {
+    align-items: flex-start;
+  }
+}
+@media screen and (max-width: 767px) {
+  .header__menu {
+    position: relative;
+  }
+}
+.header__logo {
+  font-size: 24px;
+  font-weight: bold;
+  z-index: 2;
+}
+@media screen and (max-width: 991px) {
+  .header__logo {
+    position: absolute;
+    left: 70px;
+  }
+}
+.header__nav {
+  display: flex;
+  overflow: hidden;
+}
+.header__nav a {
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+.header__nav a:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+@media screen and (max-width: 767px) {
+  .header__nav {
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding-top: 10px;
+    transition: max-height 0.5s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+  }
+  .header__nav--active {
+    display: flex;
+    max-height: 340px;
+  }
+  .header__nav a {
+    text-align: left;
+    width: 100%;
+    padding: 10px 20px;
+  }
+  .header__nav a:hover {
+    background-color: #f0f0f0;
+  }
+}
+@media screen and (max-width: 991px) {
+  .header__nav {
+    justify-content: flex-end;
+    margin-top: 50px;
+    margin-left: 150px;
+    position: relative;
+  }
+}
+.header__toggle {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  .header__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    z-index: 3;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+  }
+  .header__toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #000;
+    border-radius: 2px;
+  }
+}
+
+.menu-toggle:checked ~ .header__nav {
+  max-height: 340px;
+  transition: max-height 0.5s ease;
+}
+
+/*# sourceMappingURL=ss.css.map */
